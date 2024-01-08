@@ -1,0 +1,1232 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../frontend/06-auto-saving/">
+      
+      
+        <link rel="next" href="../02-parser/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Lexer - NSD builder docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto Mono";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lexer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="NSD builder docs" class="md-header__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NSD builder docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lexer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="NSD builder docs" class="md-nav__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    NSD builder docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-motivation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Motivation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../03-examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Technical documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Frontend
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/01-sharable-link/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sharable link
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/02-exporting-diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exporting diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/03-snackbar-notification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snackbar notification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/04-ui-library/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UI library
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/05-code-editor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Code editor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/06-auto-saving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Auto-saving
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Interpreter
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Interpreter
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tokenkind-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenKind enum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keywords-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      KEYWORDS array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literal_tokens-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      LITERAL_TOKENS record
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexer-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lexer type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexerinit-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerInit function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexergetnexttokenthenadvance-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerGetNextTokenThenAdvance function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexergetalltokens-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerGetAllTokens function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-parser/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Parser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Renderer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../renderer/01-renderer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../renderer/02-structogram-node/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structogram node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tokenkind-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenKind enum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keywords-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      KEYWORDS array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literal_tokens-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      LITERAL_TOKENS record
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexer-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lexer type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexerinit-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerInit function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexergetnexttokenthenadvance-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerGetNextTokenThenAdvance function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lexergetalltokens-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      lexerGetAllTokens function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="lexer">Lexer<a class="headerlink" href="#lexer" title="Permanent link">&para;</a></h1>
+<p>The primary purpose of this module is to convert a string into a sequence of tokens.</p>
+<p>Here is an interface of the module:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="nx">TokenKind</span><span class="w"> </span><span class="p">{}</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Token</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">KEYWORDS</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">TokenKind</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Lexer</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">lexerInit</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Lexer</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">lexerGetAllTokens</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">lexer</span><span class="o">:</span><span class="w"> </span><span class="kt">Lexer</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Token</span><span class="p">[];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">lexerGetNextTokenThenAdvance</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">lexer</span><span class="o">:</span><span class="w"> </span><span class="kt">Lexer</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Token</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="tokenkind-enum"><code>TokenKind</code> enum<a class="headerlink" href="#tokenkind-enum" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="nx">TokenKind</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">END</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">SYMBOL</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">KEYWORD</span><span class="p">,</span>
+
+<span class="w">    </span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">SEMICOLON</span><span class="p">,</span>
+
+<span class="w">    </span><span class="nx">WHITE_SPACE</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>TokenKind</code> enumeration categorize the different types of tokens that a lexer recognizes.
+Each token is assigned a <code>TokenKind</code> to denote its type.</p>
+<ul>
+<li><code>END</code>: represents the end of the input. When a lexer encounters this token, it knows there are no more tokens to process.</li>
+<li><code>SYMBOL</code>: represents any piece of text.</li>
+<li><code>KEYWORD</code>: represents keywords, like <code>if</code>, <code>for</code>, <code>while</code>, etc.</li>
+<li><code>LEFT_PAREN</code> and <code>RIGHT_PAREN</code>: represent left and right parentheses (<code>(...)</code>), respectively.</li>
+<li><code>LEFT_CURLY</code> and <code>RIGHT_CURLY</code>: represent left and right curly braces (<code>{...}</code>), respectively.</li>
+<li><code>SEMICOLON</code>: represents the semicolon (<code>;</code>) used at the end of statements.</li>
+<li><code>WHITE_SPACE</code>: represents any whitespace characters, like spaces, tabs, or newlines.</li>
+</ul>
+<h2 id="token-type"><code>Token</code> type<a class="headerlink" href="#token-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>Token</code> type represents a token in a string.
+A token is a meaningful sequence of characters, such as a keyword or a delimiter.</p>
+<p>A token is an object with two properties:</p>
+<ul>
+<li><code>kind</code>: represents a <code>TokenKind</code>, which is an enumeration of the different types of tokens that can be recognized.</li>
+<li><code>text</code>: represents the actual text of the token.</li>
+</ul>
+<h2 id="keywords-array"><code>KEYWORDS</code> array<a class="headerlink" href="#keywords-array" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">KEYWORDS</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;for&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;if&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;else&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;while&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;do&quot;</span><span class="p">,</span>
+<span class="p">];</span>
+</code></pre></div>
+<p>The <code>KEYWORDS</code> array defines a list of keywords for the lexer.</p>
+<p>During tokenization, a lexer checks if each word in the string is in the <code>KEYWORDS</code> array.
+If it is, the lexer creates a <code>Token</code> with a <code>kind</code> of <code>TokenKind.KEYWORD</code>.</p>
+<h2 id="literal_tokens-record"><code>LITERAL_TOKENS</code> record<a class="headerlink" href="#literal_tokens-record" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">TokenKind</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;{&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;}&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;(&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;)&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;;&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+</code></pre></div>
+<p>The <code>LITERAL_TOKENS</code> object defines a mapping of literal characters to their corresponding token kinds.</p>
+<p>During tokenization, a lexer checks if each character in the string is a key in the <code>LITERAL_TOKENS</code> object.
+If it is, the lexer creates a <code>Token</code> with a <code>kind</code> that corresponds to the value of that key in the <code>LITERAL_TOKENS</code> object.</p>
+<h2 id="lexer-type"><code>Lexer</code> type<a class="headerlink" href="#lexer-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Lexer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">contentLength</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">cursorPos</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>Lexer</code> type defines the structure of a lexer object.</p>
+<p>A lexer is an object with three properties:</p>
+<ul>
+<li><code>content</code> represents a string which is being tokenize.</li>
+<li><code>contentLength</code> that represents the length of the <code>content</code> string. This is useful for when a lexer needs to check if it has reached the end of the <code>content</code> string.</li>
+<li><code>cursorPos</code> represents the current position of the cursor in the <code>content</code> string. This is used to keep track of where a lexer is in the <code>content</code> string during tokenization.</li>
+</ul>
+<h2 id="lexerinit-function"><code>lexerInit</code> function<a class="headerlink" href="#lexerinit-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">lexerInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Lexer</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">content.normalize</span><span class="p">(),</span>
+<span class="w">        </span><span class="nx">contentLength</span><span class="o">:</span><span class="w"> </span><span class="kt">content.normalize</span><span class="p">().</span><span class="nx">length</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">cursorPos</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>lexerInit</code> function initializes a new <code>Lexer</code> object with a given string.
+It is used to prepare a <code>Lexer</code> object for the tokenization process.</p>
+<p>The function takes a string argument <code>content</code>.
+It returns a <code>Lexer</code> object with the <code>content</code> property set to the normalized version of the <code>content</code> string, the <code>contentLength</code> property set to the length of the normalized <code>content</code> string, and the <code>cursorPos</code> property set to 0.</p>
+<p>Calling <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">normalize</a> on user input is quite important due to the way <a href="https://stackoverflow.com/questions/63013552/whats-the-point-of-string-normalize">accented characters</a> behave.</p>
+<h2 id="lexergetnexttokenthenadvance-function"><code>lexerGetNextTokenThenAdvance</code> function<a class="headerlink" href="#lexergetnexttokenthenadvance-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">lexerGetNextTokenThenAdvance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">l</span><span class="o">:</span><span class="w"> </span><span class="kt">Lexer</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Token</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind.END</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">contentLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sr">/\s/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">WHITE_SPACE</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">        </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">[</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]];</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">contentLength</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">        </span><span class="o">!</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">]</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">        </span><span class="o">!</span><span class="sr">/\s/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">])</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">        </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">KEYWORDS</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SYMBOL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>lexerGetNextTokenThenAdvance</code> function tokenize the next token from a <code>Lexer</code> object and advance the cursor position.
+It is a key part of the tokenization process.</p>
+<p>The function takes a <code>Lexer</code> object as an argument and returns a <code>Token</code> object.</p>
+<p>The breakdown of the function is as follows:</p>
+<p>First, it starts by creating a <code>Token</code> object with a <code>kind</code> of <code>TokenKind.END</code> and an empty <code>text</code> string.
+If the cursor position in the <code>Lexer</code> object is at or beyond the end of the content string, it returns this <code>Token</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind.END</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">contentLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>If the character at the cursor position is a whitespace character, it sets the <code>kind</code> of the <code>Token</code> object to <code>TokenKind.WHITE_SPACE</code>, sets the <code>text</code> of the <code>Token</code> object to the whitespace character, increments the cursor position, and returns the <code>Token</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="sr">/\s/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">WHITE_SPACE</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it sets the <code>text</code> of the <code>Token</code> object to the character at the cursor position and increments the cursor position.
+If the character is a key in the <code>LITERAL_TOKENS</code> object, it sets the <code>kind</code> of the <code>Token</code> object to the corresponding value in the <code>LITERAL_TOKENS</code> object and returns the <code>Token</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">[</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]];</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>If the character is not a key in the <code>LITERAL_TOKENS</code> object, it continues to add the following characters to the <code>text</code> of the <code>Token</code> object and increment the cursor position until it reaches a character that is a key in the <code>LITERAL_TOKENS</code> object or a whitespace character, or until it reaches the end of the content string.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">contentLength</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="o">!</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">]</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">LITERAL_TOKENS</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="o">!</span><span class="sr">/\s/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">])</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">l</span><span class="p">.</span><span class="nx">content</span><span class="p">[</span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">l</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>If the <code>text</code> of the <code>Token</code> object is a keyword, it sets the <code>kind</code> of the <code>Token</code> object to <code>TokenKind.KEYWORD</code> and returns the <code>Token</code> object.
+Otherwise, it sets the <code>kind</code> of the <code>Token</code> object to <code>TokenKind.SYMBOL</code> and returns the <code>Token</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">KEYWORDS</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">token</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SYMBOL</span><span class="p">;</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h2 id="lexergetalltokens-function"><code>lexerGetAllTokens</code> function<a class="headerlink" href="#lexergetalltokens-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">lexerGetAllTokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">l</span><span class="o">:</span><span class="w"> </span><span class="kt">Lexer</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Token</span><span class="p">[]</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lexerGetNextTokenThenAdvance</span><span class="p">(</span><span class="nx">l</span><span class="p">))</span>
+<span class="w">            </span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tokens</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>lexerGetAllTokens</code> function generates a list of all tokens from a <code>Lexer</code> object.
+It is used to tokenize an entire string at once.</p>
+<p>The function takes a <code>Lexer</code> object as an argument and returns an array of <code>Token</code> objects.</p>
+<p>The breakdown of the function is as follows:</p>
+<p>First, it starts by creating an empty array <code>tokens</code> to store the <code>Token</code> objects.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it enters a while loop where it calls the <code>lexerGetNextTokenThenAdvance</code> function with the <code>Lexer</code> object as the argument to get the next <code>Token</code> object and advance the cursor position.
+If the <code>kind</code> of the <code>Token</code> object is <code>TokenKind.END</code>, it breaks out of the while loop.
+Otherwise, it pushes the <code>Token</code> object to the <code>tokens</code> array and continues the loop.</p>
+<p>After the while loop, it returns the <code>tokens</code> array, which contains all the <code>Token</code> objects that represent the tokens in the <code>Lexer</code> object's content string.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">lexerGetNextTokenThenAdvance</span><span class="p">(</span><span class="nx">l</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">END</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">tokens</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../01-lexer/">
+      
+      
+        <link rel="next" href="../../renderer/01-renderer/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Parser - NSD builder docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto Mono";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#parser" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="NSD builder docs" class="md-header__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NSD builder docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Parser
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="NSD builder docs" class="md-nav__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    NSD builder docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-motivation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Motivation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../03-examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Technical documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Frontend
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/01-sharable-link/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sharable link
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/02-exporting-diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exporting diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/03-snackbar-notification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snackbar notification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/04-ui-library/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UI library
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/05-code-editor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Code editor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/06-auto-saving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Auto-saving
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Interpreter
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Interpreter
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-lexer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Parser
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Parser
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nodekind-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeKind enum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeend-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeEnd type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeprocess-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeProcess type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeloopfirst-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeLoopFirst type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodelooplast-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeLoopLast type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeifelse-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeIfElse type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parser-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parser type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserinit-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserInit function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsercollecttokens-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserCollectTokens function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserskipwhitespace-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserSkipWhiteSpace function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildloopfirstnode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildLoopFirstNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildlooplastnode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildLoopLastNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildifelsenode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildIfElseNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsergetnextnodethenadvance-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserGetNextNodeThenAdvance function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsergetallnodes-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserGetAllNodes function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Renderer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../renderer/01-renderer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../renderer/02-structogram-node/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structogram node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nodekind-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeKind enum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeend-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeEnd type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeprocess-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeProcess type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeloopfirst-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeLoopFirst type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodelooplast-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeLoopLast type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodeifelse-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NodeIfElse type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parser-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parser type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserinit-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserInit function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsercollecttokens-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserCollectTokens function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserskipwhitespace-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserSkipWhiteSpace function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildloopfirstnode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildLoopFirstNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildlooplastnode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildLoopLastNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parserbuildifelsenode-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserBuildIfElseNode function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsergetnextnodethenadvance-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserGetNextNodeThenAdvance function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsergetallnodes-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      parserGetAllNodes function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="parser">Parser<a class="headerlink" href="#parser" title="Permanent link">&para;</a></h1>
+<p>The primary purpose of this module is to convert a list of tokens into an abstract syntax tree.</p>
+<p>Here is an interface of the module:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="nx">NodeKind</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">NodeEnd</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">NodeProcess</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">NodeLoopFirst</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">NodeLoopLast</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">NodeIfElse</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Node</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Parser</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">parserInit</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Parser</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="o">:</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">startToken</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">stopToken</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind</span>
+<span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Token</span><span class="p">[];</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserSkipWhiteSpace</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildLoopFirstNode</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">NodeLoopFirst</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildLoopLastNode</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">NodeLoopLast</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildIfElseNode</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">NodeIfElse</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">parserGetNextNodeThenAdvance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Node</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">Node</span><span class="p">[];</span>
+</code></pre></div>
+<h2 id="nodekind-enum"><code>NodeKind</code> enum<a class="headerlink" href="#nodekind-enum" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="nx">NodeKind</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">END</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">PROCESS</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">LOOP_FIRST</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">LOOP_LAST</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">IF_ELSE</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>NodeKind</code> enumeration represents different kinds of nodes.</p>
+<p>It has five members: <code>END</code>, <code>PROCESS</code>, <code>LOOP_FIRST</code>, <code>LOOP_LAST</code>, and <code>IF_ELSE</code>.
+Each member represents a different kind of node that can appear in the AST.</p>
+<h2 id="nodeend-type"><code>NodeEnd</code> type<a class="headerlink" href="#nodeend-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NodeEnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.END</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>NodeEnd</code> type represents an end node.</p>
+<p>It is an object with a single property <code>kind</code>, which is always <code>NodeKind.END</code>.</p>
+<h2 id="nodeprocess-type"><code>NodeProcess</code> type<a class="headerlink" href="#nodeprocess-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NodeProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.PROCESS</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[];</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>NodeProcess</code> type represents a process node.</p>
+<p>It is an object with two properties:</p>
+<ul>
+<li><code>kind</code> is always <code>NodeKind.PROCESS</code>.</li>
+<li><code>body</code> is an array of <code>Token</code> objects, which represent the tokens that make up the body of the process.</li>
+</ul>
+<h2 id="nodeloopfirst-type"><code>NodeLoopFirst</code> type<a class="headerlink" href="#nodeloopfirst-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NodeLoopFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_FIRST</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[];</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[];</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>NodeLoopFirst</code> type represents a loop-first node, such as a <code>for</code> or <code>while</code> loop.</p>
+<p>It is an object with three properties:</p>
+<ul>
+<li><code>kind</code> is always <code>NodeKind.LOOP_FIRST</code>.</li>
+<li><code>condition</code> is an array of <code>Token</code> objects, which represent the tokens that make up the condition of the loop.</li>
+<li><code>body</code> is an array of <code>Node</code> objects, which represent the nodes that make up the body of the loop.</li>
+</ul>
+<p>For example, when I encounter a node of type <code>NodeLoopFirst</code> during the interpretation process, I can evaluate the <code>condition</code> array to determine whether to execute the <code>body</code> array, simulating the execution of the loop in the original code.</p>
+<h2 id="nodelooplast-type"><code>NodeLoopLast</code> type<a class="headerlink" href="#nodelooplast-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NodeLoopLast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_LAST</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[];</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[];</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>NodeLoopLast</code> type represents a loop-last node, such as a <code>do-while</code> loop.</p>
+<p>It is an object with three properties:</p>
+<ul>
+<li><code>kind</code> is always <code>NodeKind.LOOP_LAST</code>.</li>
+<li><code>condition</code> is an array of <code>Token</code> objects, which represent the tokens that make up the condition of the loop.</li>
+<li><code>body</code> is an array of <code>Node</code> objects, which represent the nodes that make up the body of the loop.</li>
+</ul>
+<h2 id="nodeifelse-type"><code>NodeIfElse</code> type<a class="headerlink" href="#nodeifelse-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kr">type</span><span class="w"> </span><span class="nx">NodeIfElse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.IF_ELSE</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[];</span>
+<span class="w">    </span><span class="nx">bodyIf</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[];</span>
+<span class="w">    </span><span class="nx">bodyElse</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[];</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>NodeIfElse</code> type represents an if-else node.</p>
+<p>It is an object with four properties:</p>
+<ul>
+<li><code>kind</code> is always <code>NodeKind.IF_ELSE</code>.</li>
+<li><code>condition</code> is an array of <code>Token</code> objects, which represent the tokens that make up the condition of the <code>if</code> statement.</li>
+<li><code>bodyIf</code> and <code>bodyElse</code> properties are arrays of <code>Node</code> objects, which represent the nodes that make up the <code>if</code> and <code>else</code> parts of the if-else statement, respectively.</li>
+</ul>
+<h2 id="node-type"><code>Node</code> type<a class="headerlink" href="#node-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Node</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nx">NodeEnd</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nx">NodeProcess</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nx">NodeLoopFirst</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nx">NodeLoopLast</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nx">NodeIfElse</span><span class="p">;</span>
+</code></pre></div>
+<p>The <code>Node</code> type represents a node.</p>
+<p>It is a union type that can be one of five types: <code>NodeEnd</code>, <code>NodeProcess</code>, <code>NodeLoopFirst</code>, <code>NodeLoopLast</code>, or <code>NodeIfElse</code>.
+Each of these types represents a different kind of node that can appear.</p>
+<h2 id="parser-type"><code>Parser</code> type<a class="headerlink" href="#parser-type" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[];</span>
+<span class="w">    </span><span class="nx">tokenLength</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">cursorPos</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>Parser</code> type represents a parser.</p>
+<p>A parser is an object with three properties:</p>
+<ul>
+<li><code>tokens</code> is an array of <code>Token</code> objects, which represent the tokens that have been parsed.</li>
+<li><code>tokenLength</code> represents the total number of tokens.</li>
+<li><code>cursorPos</code> represents the current position of the parser in the array of tokens.</li>
+</ul>
+<h2 id="parserinit-function"><code>parserInit</code> function<a class="headerlink" href="#parserinit-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">parserInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[],</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Parser</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">tokens</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">tokenLength</span><span class="o">:</span><span class="w"> </span><span class="kt">tokens.length</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">cursorPos</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserInit</code> function initializes a new <code>Parser</code> object with a given array of <code>Token</code> objects.</p>
+<p>The function takes an array of <code>Token</code> objects as its argument.
+It returns a new <code>Parser</code> object with the <code>tokens</code> property set to the given array, the <code>tokenLength</code> property set to the length of the array, and the <code>cursorPos</code> property set to 0.</p>
+<h2 id="parsercollecttokens-function"><code>parserCollectTokens</code> function<a class="headerlink" href="#parsercollecttokens-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">startToken</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">stopToken</span><span class="o">:</span><span class="w"> </span><span class="kt">TokenKind</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Token</span><span class="p">[]</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">startToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">startToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">depth</span><span class="o">--</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">stopToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">depth</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">depth</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tokens</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserCollectTokens</code> function collects a sequence of tokens from a <code>Parser</code> object between a specified start token and stop token.
+It is particularly useful for parsing constructs that are enclosed by specific tokens and keeps the code DRY.</p>
+<p>The function takes three arguments: a <code>Parser</code> object, a start token, and a stop token.
+It returns an array of <code>Token</code> objects that were found between the start token and the stop token.</p>
+<p>The breakdown of the function is as follows:</p>
+<p>First, it checks if the parser's cursor position is beyond the length of the tokens array or if the current token is not the start token.
+If either of these conditions is true, it returns an empty array.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[];</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">startToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[];</span>
+<span class="p">}</span>
+<span class="c1">//...</span>
+</code></pre></div>
+<p>Next, it increments the cursor position and initializes an empty array <code>tokens</code> to collect the tokens and a variable <code>depth</code> to keep track of nested tokens of the same kind as the start and stop tokens.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">tokens</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">Token</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it enters a loop where it continues to collect tokens until it encounters the stop token at the same nesting level as the start token or until it has processed all the tokens.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">startToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">depth</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">stopToken</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">depth</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">depth</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">tokens</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">tokens</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h2 id="parserskipwhitespace-function"><code>parserSkipWhiteSpace</code> function<a class="headerlink" href="#parserskipwhitespace-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserSkipWhiteSpace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">WHITE_SPACE</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserSkipWhiteSpace</code> function advances the cursor position of a <code>Parser</code> object past any white space tokens.</p>
+<p>The function takes a <code>Parser</code> object as its argument.
+It does not return anything, but it modifies the <code>cursorPos</code> property of the <code>Parser</code> object.</p>
+<p>The function enters a loop where it checks if the cursor position is less than the length of the tokens array and if the current token is a white space token. If both conditions are true, it increments the cursor position.
+The loop continues until it encounters a non-white space token or has processed all the tokens.</p>
+<h2 id="parserbuildloopfirstnode-function"><code>parserBuildLoopFirstNode</code> function<a class="headerlink" href="#parserbuildloopfirstnode-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildLoopFirstNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">NodeLoopFirst</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeLoopFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_FIRST</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserBuildLoopFirstNode</code> function builds a <code>NodeLoopFirst</code> object from a <code>Parser</code> object.</p>
+<p>The function takes a <code>Parser</code> object as its argument.
+It returns a <code>NodeLoopFirst</code> object.</p>
+<p>Here is the breakdown of the function:</p>
+<p>First, it creates a new <code>NodeLoopFirst</code> object <code>node</code> with the <code>kind</code> property set to <code>NodeKind.LOOP_FIRST</code> and the <code>condition</code> and <code>body</code> properties set to empty arrays.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeLoopFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_FIRST</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="p">};</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens in the <code>Parser</code> object.
+If the cursor position is beyond the length of the tokens array or if the current token is not a left parenthesis token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it uses the <code>parserCollectTokens</code> function to collect the tokens between the left parenthesis token and the corresponding right parenthesis token, and assigns the result to the <code>condition</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Next, it again uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens.
+If the cursor position is beyond the length of the tokens array or if the current token is not a left curly brace token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it uses the <code>parserCollectTokens</code> function to collect the tokens between the left curly brace token and the corresponding right curly brace token, initializes a new <code>Parser</code> object with these tokens using the <code>parserInit</code> function, obtains all nodes from this new <code>Parser</code> object using the <code>parserGetAllNodes</code> function, assigns the result to the <code>body</code> property of the <code>node</code> object, and returns the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h2 id="parserbuildlooplastnode-function"><code>parserBuildLoopLastNode</code> function<a class="headerlink" href="#parserbuildlooplastnode-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildLoopLastNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">NodeLoopLast</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeLoopLast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_LAST</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">text</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;while&quot;</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserBuildLoopLastNode</code> function builds a <code>NodeLoopLast</code> object from a <code>Parser</code> object.</p>
+<p>The function takes a <code>Parser</code> object as its argument.
+It returns a <code>NodeLoopLast</code> object.</p>
+<p>Here is the breakdown of the function:</p>
+<p>First, it creates a new <code>NodeLoopLast</code> object <code>node</code> with the <code>kind</code> property set to <code>NodeKind.LOOP_LAST</code> and the <code>condition</code> and <code>body</code> properties set to empty arrays.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeLoopLast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.LOOP_LAST</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="p">};</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens in the <code>Parser</code> object.
+If the cursor position is beyond the length of the tokens array or if the current token is not a left curly brace token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it uses the <code>parserCollectTokens</code> function to collect the tokens between the left curly brace token and the corresponding right curly brace token, initializes a new <code>Parser</code> object with these tokens using the <code>parserInit</code> function, obtains all nodes from this new <code>Parser</code> object using the <code>parserGetAllNodes</code> function, and assigns the result to the <code>body</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Next, it again uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens. If the cursor position is beyond the length of the tokens array or if the current token is not a <code>while</code> keyword token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="w"> </span><span class="o">||</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">text</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;while&quot;</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it increments the cursor position to consume the <code>while</code> keyword, uses the <code>parserCollectTokens</code> function to collect the tokens between the left parenthesis token and the corresponding right parenthesis token, and assigns the result to the <code>condition</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Finally, it again uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens.
+If the cursor position is beyond the length of the tokens array or if the current token is a semicolon token, it increments the cursor position to consume the semicolon.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h2 id="parserbuildifelsenode-function"><code>parserBuildIfElseNode</code> function<a class="headerlink" href="#parserbuildifelsenode-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserBuildIfElseNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">NodeIfElse</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeIfElse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.IF_ELSE</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nx">bodyIf</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nx">bodyElse</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">bodyIf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">text</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;else&quot;</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">bodyElse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserBuildIfElseNode</code> function builds a <code>NodeIfElse</code> object from a <code>Parser</code> object.
+It takes a <code>Parser</code> object as its argument, and returns a <code>NodeIfElse</code> object.</p>
+<p>Here is the breakdown of the function:</p>
+<p>First,it creates a new <code>NodeIfElse</code> object <code>node</code> with the <code>kind</code> property set to <code>NodeKind.IF_ELSE</code> and the <code>condition</code>, <code>bodyIf</code>, and <code>bodyElse</code> properties set to empty arrays.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeIfElse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.IF_ELSE</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nx">bodyIf</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nx">bodyElse</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="p">};</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens in the <code>Parser</code> object.
+If the cursor position is beyond the length of the tokens array or if the current token is not a left parenthesis token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it uses the <code>parserCollectTokens</code> function to collect the tokens between the left parenthesis token and the corresponding right parenthesis token, and assigns the result to the <code>condition</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_PAREN</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_PAREN</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Next, it again uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens.
+If the cursor position is beyond the length of the tokens array or if the current token is not a left curly brace token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it uses the <code>parserCollectTokens</code> function to collect the tokens between the left curly brace token and the corresponding right curly brace token, initializes a new <code>Parser</code> object with these tokens using the <code>parserInit</code> function, obtains all nodes from this new <code>Parser</code> object using the <code>parserGetAllNodes</code> function, and assigns the result to the <code>bodyIf</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">bodyIf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it again uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens.
+If the cursor position is beyond the length of the tokens array or if the current token is not an <code>else</code> keyword token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">        </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="w"> </span><span class="o">||</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">text</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;else&quot;</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it increments the cursor position to consume the <code>else</code> keyword, uses the <code>parserCollectTokens</code> function to collect the tokens between the left curly brace token and the corresponding right curly brace token, initializes a new <code>Parser</code> object with these tokens using the <code>parserInit</code> function, obtains all nodes from this new <code>Parser</code> object using the <code>parserGetAllNodes</code> function, and assigns the result to the <code>bodyElse</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">].</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span>
+<span class="w">    </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">bodyElse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">parserInit</span><span class="p">(</span>
+<span class="w">        </span><span class="nx">parserCollectTokens</span><span class="p">(</span>
+<span class="w">            </span><span class="nx">p</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">LEFT_CURLY</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">RIGHT_CURLY</span><span class="p">,</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Finally, it returns the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>By using the <code>parserBuildIfElseNode</code> function, I can build a <code>NodeIfElse</code> object from a <code>Parser</code> object, which represents an if-else node in an AST. This is particularly useful for parsing if-else constructs in the code.</p>
+<h2 id="parsergetnextnodethenadvance-function"><code>parserGetNextNodeThenAdvance</code> function<a class="headerlink" href="#parsergetnextnodethenadvance-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">parserGetNextNodeThenAdvance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Node</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.END</span><span class="p">,</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;for&quot;</span><span class="o">:</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;while&quot;</span><span class="o">:</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildLoopFirstNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;do&quot;</span><span class="o">:</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildLoopLastNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;if&quot;</span><span class="o">:</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildIfElseNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">default</span><span class="o">:</span>
+<span class="w">                </span><span class="kt">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.PROCESS</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">        </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">END</span><span class="w"> </span><span class="o">||</span>
+<span class="w">            </span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserGetNextNodeThenAdvance</code> function parses the next node from a <code>Parser</code> object and advances the cursor position.
+It function takes a <code>Parser</code> object as its argument, and returns a <code>Node</code> object.</p>
+<p>Here is the breakdown of the function:</p>
+<p>First, it uses the <code>parserSkipWhiteSpace</code> function to skip any white space tokens in the <code>Parser</code> object.
+If the cursor position is beyond the length of the tokens array, it returns a <code>NodeEnd</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">parserSkipWhiteSpace</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.END</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it obtains the current token and increments the cursor position.
+If the current token is a keyword token, it checks the text of the token and calls the corresponding function to build a loop or if-else node, and returns the result.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">KEYWORD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;for&quot;</span><span class="o">:</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;while&quot;</span><span class="o">:</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildLoopFirstNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;do&quot;</span><span class="o">:</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildLoopLastNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;if&quot;</span><span class="o">:</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">parserBuildIfElseNode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">default</span><span class="o">:</span>
+<span class="w">            </span><span class="kt">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it creates a new <code>NodeProcess</code> object <code>node</code> with the <code>kind</code> property set to <code>NodeKind.PROCESS</code> and the <code>body</code> property set to an empty array.
+If the current token is a semicolon token, it returns the <code>node</code> object as is.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">NodeKind.PROCESS</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="p">};</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Otherwise, it adds the current token to the <code>body</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it enters a loop where it obtains the current token, increments the cursor position, and checks if the current token is an end or semicolon token.
+If it is, it breaks the loop. Otherwise, it adds the current token to the <code>body</code> property of the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokenLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">tokens</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="p">];</span>
+<span class="w">    </span><span class="nx">p</span><span class="p">.</span><span class="nx">cursorPos</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">END</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="nx">token</span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">TokenKind</span><span class="p">.</span><span class="nx">SEMICOLON</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">node</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Finally, it returns the <code>node</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">node</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<h2 id="parsergetallnodes-function"><code>parserGetAllNodes</code> function<a class="headerlink" href="#parsergetallnodes-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">parserGetAllNodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">p</span><span class="o">:</span><span class="w"> </span><span class="kt">Parser</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Node</span><span class="p">[]</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">nodes</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span><span class="nx">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetNextNodeThenAdvance</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span>
+<span class="w">            </span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">NodeKind</span><span class="p">.</span><span class="nx">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">nodes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">nodes</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The <code>parserGetAllNodes</code> parses all nodes from a <code>Parser</code> object.
+It takes a <code>Parser</code> object as its argument and returns an array of <code>Node</code> objects.</p>
+<p>Here is the breakdown of the function:</p>
+<p>First, it creates an empty array <code>nodes</code> to store the nodes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">nodes</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Then, it enters a loop where it uses the <code>parserGetNextNodeThenAdvance</code> function to get the next node from the <code>Parser</code> object and advance the cursor position, and checks if the <code>kind</code> property of the node is <code>NodeKind.END</code>.
+If it is, it breaks the loop. Otherwise, it adds the node to the <code>nodes</code> array.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">node</span><span class="o">:</span><span class="w"> </span><span class="kt">Node</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">(</span><span class="nx">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">parserGetNextNodeThenAdvance</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">kind</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">NodeKind</span><span class="p">.</span><span class="nx">END</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">nodes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+<p>Finally, it returns the <code>nodes</code> array.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">nodes</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

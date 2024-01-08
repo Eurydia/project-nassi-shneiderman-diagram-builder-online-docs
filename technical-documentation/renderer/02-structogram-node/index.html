@@ -1,0 +1,1435 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../01-renderer/">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Structogram node - NSD builder docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto Mono";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#structogram-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="NSD builder docs" class="md-header__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NSD builder docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Structogram node
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="NSD builder docs" class="md-nav__button md-logo" aria-label="NSD builder docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    NSD builder docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-motivation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Motivation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../03-examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Technical documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Frontend
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/01-sharable-link/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sharable link
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/02-exporting-diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exporting diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/03-snackbar-notification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snackbar notification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/04-ui-library/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UI library
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/05-code-editor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Code editor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/06-auto-saving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Auto-saving
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Interpreter
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Interpreter
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interpreter/01-lexer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interpreter/02-parser/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Parser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Renderer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-renderer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Renderer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Structogram node
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Structogram node
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodewrapper-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeWrapper component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramcomponenttext-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramComponentText component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeprocess-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeProcess component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeloopfirst-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeLoopFirst component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodelooplast-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeLoopLast component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeifelse-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeIfElse component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filteremptyprocessnodes-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterEmptyProcessNodes function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnode-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNode component
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodewrapper-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeWrapper component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramcomponenttext-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramComponentText component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeprocess-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeProcess component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeloopfirst-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeLoopFirst component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodelooplast-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeLoopLast component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnodeifelse-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNodeIfElse component
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filteremptyprocessnodes-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterEmptyProcessNodes function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structogramnode-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      StructogramNode component
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="structogram-node">Structogram node<a class="headerlink" href="#structogram-node" title="Permanent link">&para;</a></h1>
+<p>This compnent is a collection of smaller components that are used to render a <code>Node</code> object as a <code>StructogramNodeLoopFirst</code>, <code>StructogramNodeLoopLast</code>, <code>StructogramNodeIfElse</code>, or <code>StructogramNodeProcess</code> component based on its <code>kind</code> property.</p>
+<p>Here is an interface of the component:</p>
+<div class="highlight"><pre><span></span><code>type StructogramNodeWrapperProps;
+const StructogramNodeWrapper: FC&lt;
+    StructogramNodeWrapperProps
+&gt;;
+
+type StructogramComponentTextProps;
+const StructogramComponentText: FC&lt;
+    StructogramComponentTextProps
+&gt;;
+
+type StructogramNodeProcessProps;
+const StructogramNodeProcess: FC&lt;
+    StructogramNodeProcessProps
+&gt;;
+
+type StructogramNodeLoopFirstProps;
+const StructogramNodeLoopFirst: FC&lt;
+    StructogramNodeLoopFirstProps
+&gt;;
+
+type StructogramNodeLoopLastProps;
+const StructogramNodeLoopLast: FC&lt;
+    StructogramNodeLoopLastProps
+&gt;;
+
+type StructogramNodeIfElseProps;
+const StructogramNodeIfElse: FC&lt;
+    StructogramNodeIfElseProps
+&gt;;
+
+const fitlerEmptyProcessNodes = (node: Node) =&gt; boolean;
+
+type StructogramNodeProps;
+export const StructogramNode: FC&lt;
+    StructogramNodeProps
+&gt;;
+</code></pre></div>
+<h2 id="structogramnodewrapper-component"><code>StructogramNodeWrapper</code> component<a class="headerlink" href="#structogramnodewrapper-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeWrapperProps = {
+    children: ReactNode | ReactNode[];
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+const StructogramNodeWrapper: FC&lt;
+    StructogramNodeWrapperProps
+&gt; = (props) =&gt; {
+    const {
+        children,
+        borderTop,
+        borderBottom,
+        borderLeft,
+        borderRight,
+    } = props;
+    return (
+        &lt;Box
+            height=&quot;100%&quot;
+            sx={{
+                borderColor: &quot;inherit&quot;,
+                backgroundColor: &quot;inherit&quot;,
+                borderStyle: &quot;solid&quot;,
+                borderLeftWidth: borderLeft
+                    ? &quot;inherit&quot;
+                    : 0,
+                borderTopWidth: borderTop ? &quot;inherit&quot; : 0,
+                borderBottomWidth: borderBottom
+                    ? &quot;inherit&quot;
+                    : 0,
+                borderRightWidth: borderRight
+                    ? &quot;inherit&quot;
+                    : 0,
+            }}
+        &gt;
+            {children}
+        &lt;/Box&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramNodeWrapper</code> component is a wrapper around other node components, providing them with a border and a background color.</p>
+<p>This component includes <code>children</code> which can be a single React node or an array of React nodes, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderLeft</code>, and <code>borderRight</code> properties which are boolean values indicating whether the wrapper should have a border on the top, bottom, left, and right respectively.</p>
+<h2 id="structogramcomponenttext-component"><code>StructogramComponentText</code> component<a class="headerlink" href="#structogramcomponenttext-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramComponentTextProps =
+    TypographyProps &amp; {
+        children?: string;
+    };
+const StructogramComponentText: FC&lt;
+    StructogramComponentTextProps
+&gt; = (props) =&gt; {
+    const { children, ...rest } = props;
+
+    return (
+        &lt;Typography
+            fontFamily=&quot;inherit&quot;
+            fontWeight=&quot;inherit&quot;
+            padding={1}
+            paddingLeft={2}
+            {...rest}
+        &gt;
+            {children ?? &quot;...&quot;}
+        &lt;/Typography&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramComponentText</code> component displays text with inherited font family and weight, and with some padding.</p>
+<p>Since the text is optional, the component will display <code>...</code> if no text is provided.</p>
+<h2 id="structogramnodeprocess-component"><code>StructogramNodeProcess</code> component<a class="headerlink" href="#structogramnodeprocess-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeProcessProps = {
+    text?: string;
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+const StructogramNodeProcess: FC&lt;
+    StructogramNodeProcessProps
+&gt; = (props) =&gt; {
+    const { text, ...rest } = props;
+
+    return (
+        &lt;StructogramNodeWrapper {...rest}&gt;
+            &lt;StructogramComponentText&gt;
+                {text}
+            &lt;/StructogramComponentText&gt;
+        &lt;/StructogramNodeWrapper&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramNodeProcess</code> component represents a process node in a structogram.</p>
+<p>It takes a <code>StructogramNodeProcessProps</code> object as its props.
+This object includes an optional <code>text</code> property which is a string, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderRight</code>, and <code>borderLeft</code> properties which are boolean values indicating whether the node should have a border on the top, bottom, right, and left respectively.</p>
+<h2 id="structogramnodeloopfirst-component"><code>StructogramNodeLoopFirst</code> component<a class="headerlink" href="#structogramnodeloopfirst-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeLoopFirstProps = {
+    condition?: string;
+    body: Node[];
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+export const StructogramNodeLoopFirst: FC&lt;
+    StructogramNodeLoopFirstProps
+&gt; = (props) =&gt; {
+    const { condition, body, ...rest } = props;
+
+    let bodyNode: ReactNode | ReactNode[] = (
+        &lt;StructogramNodeProcess
+            borderTop
+            borderLeft
+        /&gt;
+    );
+
+    if (body.length &gt; 0) {
+        bodyNode = body.map((subnode, index) =&gt; (
+            &lt;StructogramNode
+                key={`subnode-${index}`}
+                borderTop
+                borderLeft
+                node={subnode}
+            /&gt;
+        ));
+    }
+
+    return (
+        &lt;StructogramNodeWrapper {...rest}&gt;
+            &lt;StructogramComponentText&gt;
+                {condition}
+            &lt;/StructogramComponentText&gt;
+            &lt;Box paddingLeft={2}&gt;{bodyNode}&lt;/Box&gt;
+        &lt;/StructogramNodeWrapper&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramNodeLoopFirst</code> component represent a test-first loop node in a structogram.</p>
+<p>It takes a <code>StructogramNodeLoopFirstProps</code> object as its props.
+This object includes an optional <code>condition</code> property which is a string, a <code>body</code> property which is an array of <code>Node</code> objects, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderRight</code>, and <code>borderLeft</code> properties which are boolean values indicating whether the node should have a border on the top, bottom, right, and left respectively.</p>
+<p>The indented effect of the loop is achieved by wrapping the <code>body</code> in a <code>Box</code> component with a <code>paddingLeft</code> of 2.</p>
+<h2 id="structogramnodelooplast-component"><code>StructogramNodeLoopLast</code> component<a class="headerlink" href="#structogramnodelooplast-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeLoopLastProps = {
+    condition?: string;
+    body: Node[];
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+export const StructogramNodeLoopLast: FC&lt;
+    StructogramNodeLoopLastProps
+&gt; = (props) =&gt; {
+    const { condition, body, ...rest } = props;
+
+    let bodyNode: ReactNode | ReactNode[] = (
+        &lt;StructogramNodeProcess
+            borderBottom
+            borderLeft
+        /&gt;
+    );
+    if (body.length &gt; 0) {
+        bodyNode = body.map((subnode, index) =&gt; (
+            &lt;StructogramNode
+                key={`subnode-${index}`}
+                node={subnode}
+                borderBottom
+                borderLeft
+            /&gt;
+        ));
+    }
+    return (
+        &lt;StructogramNodeWrapper {...rest}&gt;
+            &lt;Box paddingLeft={2}&gt;{bodyNode}&lt;/Box&gt;
+            &lt;StructogramComponentText&gt;
+                {condition}
+            &lt;/StructogramComponentText&gt;
+        &lt;/StructogramNodeWrapper&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramNodeLoopLast</code> component represents a test-last loop node in a structogram.</p>
+<p>It takes a <code>StructogramNodeLoopLastProps</code> object as its props.
+This object includes an optional <code>condition</code> property which is a string, a <code>body</code> property which is an array of <code>Node</code> objects, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderRight</code>, and <code>borderLeft</code> properties which are boolean values indicating whether the node should have a border on the top, bottom, right, and left respectively.</p>
+<p>The indented effect of the loop is achieved by wrapping the <code>body</code> in a <code>Box</code> component with a <code>paddingLeft</code> of 2.</p>
+<h2 id="structogramnodeifelse-component"><code>StructogramNodeIfElse</code> component<a class="headerlink" href="#structogramnodeifelse-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeIfElseProps = {
+    condition?: string;
+    bodyIf: Node[];
+    bodyElse: Node[];
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+export const StructogramNodeIfElse: FC&lt;
+    StructogramNodeIfElseProps
+&gt; = (props) =&gt; {
+    const { condition, bodyIf, bodyElse, ...rest } =
+        props;
+
+    let bodyNodeIf: ReactNode | ReactNode[] = (
+        &lt;StructogramNodeProcess
+            borderTop
+            borderRight
+        /&gt;
+    );
+    if (bodyIf.length &gt; 0) {
+        bodyNodeIf = bodyIf.map((subnode, index) =&gt; (
+            &lt;StructogramNode
+                key={`index-${index}`}
+                borderTop
+                borderRight
+                node={subnode}
+            /&gt;
+        ));
+    }
+
+    let bodyNodeElse: ReactNode | ReactNode[] = (
+        &lt;StructogramNodeProcess borderTop /&gt;
+    );
+    if (bodyElse.length &gt; 0) {
+        bodyNodeElse = bodyElse.map(
+            (subnode, index) =&gt; (
+                &lt;StructogramNode
+                    key={`index-${index}`}
+                    borderTop
+                    node={subnode}
+                /&gt;
+            ),
+        );
+    }
+
+    return (
+        &lt;StructogramNodeWrapper {...rest}&gt;
+            &lt;Grid
+                container
+                height=&quot;100%&quot;
+            &gt;
+                &lt;Grid
+                    item
+                    xs={12}
+                &gt;
+                    &lt;StructogramComponentText&gt;
+                        {condition}
+                    &lt;/StructogramComponentText&gt;
+                &lt;/Grid&gt;
+                &lt;Grid
+                    item
+                    xs={6}
+                &gt;
+                    &lt;Box
+                        height=&quot;100%&quot;
+                        display=&quot;flex&quot;
+                        alignItems=&quot;center&quot;
+                        justifyContent=&quot;center&quot;
+                        position=&quot;relative&quot;
+                    &gt;
+                        &lt;ArrowTopLeftBottomRight color=&quot;inherit&quot; /&gt;
+                        &lt;StructogramComponentText
+                            sx={{
+                                zIndex: 2,
+                                backgroundColor: grey[300],
+                            }}
+                        &gt;
+                            True
+                        &lt;/StructogramComponentText&gt;
+                    &lt;/Box&gt;
+                &lt;/Grid&gt;
+                &lt;Grid
+                    item
+                    xs={6}
+                &gt;
+                    &lt;Box
+                        height=&quot;100%&quot;
+                        display=&quot;flex&quot;
+                        alignItems=&quot;center&quot;
+                        justifyContent=&quot;center&quot;
+                        position=&quot;relative&quot;
+                    &gt;
+                        &lt;ArrowBottomLeftTopRight color=&quot;inherit&quot; /&gt;
+                        &lt;StructogramComponentText
+                            sx={{
+                                zIndex: 2,
+                                backgroundColor: grey[300],
+                            }}
+                        &gt;
+                            False
+                        &lt;/StructogramComponentText&gt;
+                    &lt;/Box&gt;
+                &lt;/Grid&gt;
+                &lt;Grid
+                    item
+                    xs={6}
+                &gt;
+                    {bodyNodeIf}
+                &lt;/Grid&gt;
+                &lt;Grid
+                    item
+                    xs={6}
+                &gt;
+                    {bodyNodeElse}
+                &lt;/Grid&gt;
+            &lt;/Grid&gt;
+        &lt;/StructogramNodeWrapper&gt;
+    );
+};
+</code></pre></div>
+<p>The <code>StructogramNodeIfElse</code> component represents an if-else node in a structogram.</p>
+<p>It takes a <code>StructogramNodeIfElseProps</code> object as its props.
+This object includes an optional <code>condition</code> property which is a string, <code>bodyIf</code> and <code>bodyElse</code> properties which are arrays of <code>Node</code> objects, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderRight</code>, and <code>borderLeft</code> properties which are boolean values indicating whether the node should have a border on the top, bottom, right, and left respectively.</p>
+<h2 id="filteremptyprocessnodes-function"><code>filterEmptyProcessNodes</code> function<a class="headerlink" href="#filteremptyprocessnodes-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>const fitlerEmptyProcessNodes = (
+    node: Node,
+): boolean =&gt; {
+    return (
+        node.kind !== NodeKind.PROCESS ||
+        node.body
+            .map((token) =&gt; token.text)
+            .join(&quot;&quot;)
+            .trim().length &gt; 0
+    );
+};
+</code></pre></div>
+<p>The <code>fitlerEmptyProcessNodes</code> function filters out process nodes that do not have text in their body.</p>
+<p>It takes a <code>Node</code> object as its argument and returns a boolean value.
+This function is typically used as a callback function for the <code>Array.prototype.filter</code> method, which creates a new array with all elements that pass the test implemented by the provided function.</p>
+<h2 id="structogramnode-component"><code>StructogramNode</code> component<a class="headerlink" href="#structogramnode-component" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>type StructogramNodeProps = {
+    node: Node;
+    borderTop?: boolean;
+    borderBottom?: boolean;
+    borderRight?: boolean;
+    borderLeft?: boolean;
+};
+export const StructogramNode: FC&lt;
+    StructogramNodeProps
+&gt; = (props) =&gt; {
+    const { node, ...rest } = props;
+    switch (node.kind) {
+        case NodeKind.LOOP_FIRST: {
+            let text: string | undefined;
+            if (node.condition.length &gt; 0) {
+                text = node.condition
+                    .map((token) =&gt; token.text)
+                    .join(&quot;&quot;)
+                    .trim();
+            }
+            return (
+                &lt;StructogramNodeLoopFirst
+                    {...rest}
+                    condition={text}
+                    body={node.body.filter(
+                        fitlerEmptyProcessNodes,
+                    )}
+                /&gt;
+            );
+        }
+        case NodeKind.LOOP_LAST: {
+            let text: string | undefined;
+            if (node.condition.length &gt; 0) {
+                text = node.condition
+                    .map((token) =&gt; token.text)
+                    .join(&quot;&quot;)
+                    .trim();
+            }
+            return (
+                &lt;StructogramNodeLoopLast
+                    {...rest}
+                    condition={text}
+                    body={node.body.filter(
+                        fitlerEmptyProcessNodes,
+                    )}
+                /&gt;
+            );
+        }
+        case NodeKind.IF_ELSE: {
+            let text: string | undefined;
+            if (node.condition.length &gt; 0) {
+                text = node.condition
+                    .map((token) =&gt; token.text)
+                    .join(&quot;&quot;)
+                    .trim();
+            }
+            return (
+                &lt;StructogramNodeIfElse
+                    {...rest}
+                    condition={text}
+                    bodyIf={node.bodyIf.filter(
+                        fitlerEmptyProcessNodes,
+                    )}
+                    bodyElse={node.bodyElse.filter(
+                        fitlerEmptyProcessNodes,
+                    )}
+                /&gt;
+            );
+        }
+        case NodeKind.PROCESS: {
+            let text: string | undefined = node.body
+                .map((token) =&gt; token.text)
+                .join(&quot;&quot;)
+                .trim();
+
+            if (text.length === 0) {
+                text = undefined;
+            }
+            return (
+                &lt;StructogramNodeProcess
+                    {...rest}
+                    text={text}
+                /&gt;
+            );
+        }
+    }
+    return &lt;Fragment /&gt;;
+};
+</code></pre></div>
+<p>The <code>StructogramNode</code> component a node in a structogram.</p>
+<p>It takes a <code>StructogramNodeProps</code> object as its props.
+This object includes a <code>node</code> property which is a <code>Node</code> object, and optional <code>borderTop</code>, <code>borderBottom</code>, <code>borderRight</code>, and <code>borderLeft</code> properties which are boolean values indicating whether the node should have a border on the top, bottom, right, and left respectively.</p>
+<p>If the <code>kind</code> property is <code>NodeKind.LOOP_FIRST</code> or <code>NodeKind.LOOP_LAST</code>, it returns a <code>StructogramNodeLoopFirst</code> or <code>StructogramNodeLoopLast</code> component respectively, passing it the <code>rest</code> object as props, a <code>condition</code> prop which is a string created by joining and trimming the <code>text</code> properties of the tokens in the <code>condition</code> array of the <code>Node</code> object, and a <code>body</code> prop which is an array of <code>Node</code> objects filtered by the <code>fitlerEmptyProcessNodes</code> function.</p>
+<p>If the <code>kind</code> property is <code>NodeKind.IF_ELSE</code>, it return a <code>StructogramNodeIfElse</code> component, passing it the <code>rest</code> object as props, a <code>condition</code> prop similar to the one described above, and <code>bodyIf</code> and <code>bodyElse</code> props which are arrays of <code>Node</code> objects filtered by the <code>fitlerEmptyProcessNodes</code> function.</p>
+<p>If the <code>kind</code> property is <code>NodeKind.PROCESS</code>, it returns a <code>StructogramNodeProcess</code> component, passing it the <code>rest</code> object as props and a <code>text</code> prop which is a string created by joining and trimming the <code>text</code> properties of the tokens in the <code>body</code> array of the <code>Node</code> object.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
